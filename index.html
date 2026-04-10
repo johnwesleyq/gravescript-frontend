@@ -1179,6 +1179,7 @@ footer {
 </div>
 
 <script>
+  const API_BASE = 'https://gravescript-backend-production.up.railway.app';
 // ── NAV SCROLL EFFECT ──
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
@@ -1248,7 +1249,19 @@ function closeModal() {
 function maybeClose(e) {
   if (e.target === document.getElementById('mOverlay')) closeModal();
 }
-function submitForm(h, p) {
+async function submitForm(h, p) {
+  const email = document.querySelector('.modal-box input[type="email"]')?.value;
+  const name  = document.querySelector('.modal-box input[type="text"]')?.value;
+  const role  = document.querySelector('.modal-box select')?.value;
+  if (email) {
+    try {
+      await fetch('https://gravescript-backend-production.up.railway.app/api/signup', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name, email, role })
+      });
+    } catch(e) {}
+  }
   closeModal();
   showToast(h, p);
 }
