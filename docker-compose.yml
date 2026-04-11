@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  kronos-api:
+    build: .
+    container_name: kronos-trading-bot
+    ports:
+      - "5001:5001"
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - AUTO_TRADING_ENABLED=true
+      - INITIAL_CREDITS=1000000
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
